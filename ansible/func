@@ -1,0 +1,10 @@
+ansible-playbook(){
+  del_stopped ansible
+
+  $DOCKER_COMMAND run --rm -it --user 1000 \
+    -v ${PWD}/hosts:/etc/ansible/hosts:ro \
+    -v ${HOME}/.ssh:/root/.ssh:ro \
+    -v ${PWD}:/ansible/playbooks \
+    --name ansible \
+    $DOCKER_REPO_PREFIX/ansible $*
+}
