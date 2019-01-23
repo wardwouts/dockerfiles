@@ -2,6 +2,9 @@
 # https://github.com/walokra/docker-ansible-playbook/blob/master/Dockerfile
 # http://ruleoftech.com/2017/dockerizing-all-the-things-running-ansible-inside-docker-container
 #
+# I also got bitten by this issue:
+# https://github.com/ansible/ansible/issues/16894
+#
 # docker run --rm \
 # 	-it \
 # 	-v ${PWD}/hosts:/etc/ansible/hosts \
@@ -9,8 +12,10 @@
 # 	-v ${HOME}/.ssh:/root/.ssh:ro \
 # 	ansible all -m ping
 #
-FROM alpine:3.7
+FROM alpine:3.8
 
+# Releases can be found here
+# https://releases.ansible.com/ansible/
 ENV ANSIBLE_VERSION 2.5.0
 
 ENV BUILD_PACKAGES \
@@ -72,6 +77,8 @@ ENV ANSIBLE_SSH_PIPELINING True
 ENV PYTHONPATH /ansible/lib
 ENV PATH /ansible/bin:$PATH
 ENV ANSIBLE_LIBRARY /ansible/library
+ENV ANSIBLE_TRANSPORT paramiko
+ENV ANSIBLE_LOCAL_TEMP /tmp/.ansible
 
 WORKDIR /ansible/playbooks
 

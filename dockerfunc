@@ -4,7 +4,8 @@
 # https://github.com/jessfraz/dotfiles/blob/master/.dockerfunc
 # https://github.com/jessfraz/dockerfiles
 
-export DOCKER_REPO_PREFIX=wardwouts
+#export DOCKER_REPO_PREFIX=wardwouts
+export DOCKER_REPO_PREFIX=localhost
 export DOCKER_COMMAND=podman
 
 # Figure out where the repository lives, to be able to source functions
