@@ -3,9 +3,9 @@ ansible-playbook(){
 
   $DOCKER_COMMAND run --rm -it \
     --security-opt label=disable \
-    -v ${HOME}/.ssh:/root/.ssh:ro \
-    -v ${PWD}:/ansible/playbooks \
-    -v ${PWD}/hosts:/etc/ansible/hosts:ro \
+    -v "${HOME}"/.ssh:/root/.ssh:ro \
+    -v "${PWD}":/ansible/playbooks \
+    -v "${PWD}"/hosts:/etc/ansible/hosts:ro \
     --name ansible \
-    $DOCKER_REPO_PREFIX/ansible --user ward --ask-pass $*
+    "$DOCKER_REPO_PREFIX"/ansible --user "$USERNAME" --ask-pass "$@"
 }

@@ -9,11 +9,13 @@ export DOCKER_REPO_PREFIX=localhost
 export DOCKER_COMMAND=podman
 
 # Figure out where the repository lives, to be able to source functions
-MYDIR=$(dirname $(realpath $0))
+RP=$(realpath "$0")
+MYDIR=$(dirname "$RP")
 CURDIR=$(pwd)
-cd  $MYDIR
-export MY_GIT_REPO=$(git rev-parse --show-toplevel)
-cd $CURDIR
+cd "$MYDIR" || exit
+MY_GIT_REPO=$(git rev-parse --show-toplevel)
+export MY_GIT_REPO
+cd "$CURDIR" || exit
 
 # Helper functions
 
@@ -31,6 +33,7 @@ del_stopped(){
 
 # Source all shell functions from git repository
 
-for funcfile in $(find $MY_GIT_REPO -name func -type f); do
-	source $funcfile
+find "$MY_GIT_REPO" -name func -type f | while read -r funcfile
+do
+	source "$funcfile"
 done

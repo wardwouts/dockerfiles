@@ -4,7 +4,7 @@ weechat(){
  $DOCKER_COMMAND run --rm -it --user 1000 \
   -v /etc/localtime:/etc/localtime:ro \
   -v "${HOME}/.weechat:/home/user/.weechat:Z" \
-  -e TERM=$TERM \
+  -e TERM="$TERM" \
   --name weechat \
-  $DOCKER_REPO_PREFIX/weechat
+  "$DOCKER_REPO_PREFIX"/weechat
 }
