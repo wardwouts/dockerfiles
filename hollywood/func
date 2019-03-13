@@ -1,0 +1,7 @@
+hollywood(){
+  del_stopped hollywood
+
+  $DOCKER_COMMAND run --rm -it \
+    --name hollywood \
+    "$DOCKER_REPO_PREFIX"/hollywood
+}
