@@ -12,11 +12,11 @@
 # 	-v ${HOME}/.ssh:/root/.ssh:ro \
 # 	ansible all -m ping
 #
-FROM alpine:3.8
+FROM alpine:3.9
 
 # Releases can be found here
 # https://releases.ansible.com/ansible/
-ENV ANSIBLE_VERSION 2.5.0
+ENV ANSIBLE_VERSION 2.7.9
 
 ENV BUILD_PACKAGES \
   bash \
