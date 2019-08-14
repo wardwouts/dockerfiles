@@ -16,7 +16,7 @@ FROM alpine:3.9
 
 # Releases can be found here
 # https://releases.ansible.com/ansible/
-ENV ANSIBLE_VERSION 2.7.9
+ENV ANSIBLE_VERSION 2.8.3
 
 ENV BUILD_PACKAGES \
   bash \

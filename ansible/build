@@ -1,0 +1,3 @@
+#!/bin/sh
+podman image rm ansible
+podman build -t ansible .
