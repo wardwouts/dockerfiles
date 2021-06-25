@@ -5,8 +5,13 @@
 # https://github.com/jessfraz/dockerfiles
 
 #export DOCKER_REPO_PREFIX=wardwouts
-export DOCKER_REPO_PREFIX=localhost
-export DOCKER_COMMAND=podman
+if [[ -z "${DOCKER_COMMAND}" ]]; then
+    export DOCKER_COMMAND=docker
+fi
+
+if [[ -z "${DOCKER_REPO_PREFIX}" ]]; then
+    export DOCKER_REPO_PREFIX=localhost
+fi
 
 # Figure out where the repository lives, to be able to source functions
 RP=$(realpath "$0")
@@ -20,13 +25,13 @@ cd "$CURDIR" || exit
 # Helper functions
 
 del_stopped(){
-	local name=$1
-	local state
-	state=$($DOCKER_COMMAND inspect --format "{{.State.Running}}" "$name" 2>/dev/null)
+    local name=$1
+    local state
+    state=$($DOCKER_COMMAND inspect --format "{{.State.Running}}" "$name" 2>/dev/null)
 
-	if [[ "$state" == "false" ]]; then
-		$DOCKER_COMMAND rm "$name"
-	fi
+    if [[ "$state" == "false" ]]; then
+        $DOCKER_COMMAND rm "$name"
+    fi
 }
 
 # /Helper functions
@@ -35,5 +40,5 @@ del_stopped(){
 
 find "$MY_GIT_REPO" -name func -type f | while read -r funcfile
 do
-	source "$funcfile"
+    source "$funcfile"
 done
