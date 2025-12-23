@@ -1,0 +1,44 @@
+#!/usr/bin/zsh
+
+# Inspired by:
+# https://github.com/jessfraz/dotfiles/blob/master/.dockerfunc
+# https://github.com/jessfraz/dockerfiles
+
+#export DOCKER_REPO_PREFIX=wardwouts
+if [[ -z "${DOCKER_COMMAND}" ]]; then
+    export DOCKER_COMMAND=docker
+fi
+
+if [[ -z "${DOCKER_REPO_PREFIX}" ]]; then
+    export DOCKER_REPO_PREFIX=localhost
+fi
+
+# Figure out where the repository lives, to be able to source functions
+RP=$(realpath "$0")
+MYDIR=$(dirname "$RP")
+CURDIR=$(pwd)
+cd "$MYDIR" || exit
+MY_GIT_REPO=$(git rev-parse --show-toplevel)
+export MY_GIT_REPO
+cd "$CURDIR" || exit
+
+# Helper functions
+
+del_stopped(){
+    local name=$1
+    local state
+    state=$($DOCKER_COMMAND inspect --format "{{.State.Running}}" "$name" 2>/dev/null)
+
+    if [[ "$state" == "false" ]]; then
+        $DOCKER_COMMAND rm "$name"
+    fi
+}
+
+# /Helper functions
+
+# Source all shell functions from git repository
+
+find "$MY_GIT_REPO" -name func -type f | while read -r funcfile
+do
+    source "$funcfile"
+done
