@@ -1,13 +1,11 @@
-ansible-playbook(){
-  del_stopped ansible
+tcping(){
+  del_stopped tcping
 
   $DOCKER_COMMAND run --rm -it \
     --security-opt label=disable \
-    -v "${SSH_AUTH_SOCK}:/root/ssh-sock" \
-    -e SSH_AUTH_SOCK=/root/ssh-sock \
+    -v "${HOME}"/.ssh:/root/.ssh:ro \
     -v "${PWD}":/ansible/playbooks \
     -v "${PWD}"/hosts:/etc/ansible/hosts:ro \
     --name ansible \
     "$DOCKER_REPO_PREFIX"/ansible --user "$USERNAME" --ask-pass "$@"
 }
-    #-v "${HOME}"/.ssh:/root/.ssh:ro \
